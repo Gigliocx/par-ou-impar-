@@ -1,48 +1,67 @@
-// Incluímos a biblioteca iostream para usar funções de entrada e saída (cin, cout)
 #include <iostream>
-
-// Incluímos as bibliotecas cstdlib e ctime para gerar números aleatórios
 #include <cstdlib> // Para rand() e srand()
 #include <ctime>   // Para time()
+#include <string>  // Para trabalhar com strings
 
 int main() {
     // Declaração de variáveis
-    std::string escolhaJogador; // Armazena se o jogador escolheu "par" ou "ímpar"
-    int jogadorNumero;          // Armazena o número escolhido pelo jogador
-    int computadorNumero;       // Armazena o número gerado aleatoriamente pelo computador
-    int soma;                   // Armazena a soma dos dois números
+    std::string nomeJogador;    // Nome do jogador
+    std::string escolhaJogador; // Escolha de par ou ímpar
+    int jogadorNumero;          // Número escolhido pelo jogador
+    int computadorNumero;       // Número gerado pela IA (computador)
+    int soma;                   // Soma dos números
 
-    // Inicializamos o gerador de números aleatórios com a função srand()
-    srand(time(0)); // Usamos time(0) para que os números sejam sempre diferentes a cada execução
+    // Pedir o nome do jogador e personalizar a interação
+    std::cout << "Qual é o seu nome, herói? ";
+    std::getline(std::cin, nomeJogador); // Captura o nome do jogador (inclusive espaços)
 
-    // Exibimos uma mensagem pedindo que o jogador escolha "par" ou "ímpar"
-    std::cout << "Escolha par ou ímpar: ";
-    std::cin >> escolhaJogador; // Capturamos a escolha do jogador
+    // Exibir a história
+    std::cout << "\nBem-vindo, " << nomeJogador << "!" << std::endl;
+    std::cout << "A IA mais poderosa do mundo quer dominar o planeta.\n";
+    std::cout << "A única forma de impedir essa conquista é vencendo-a em um jogo de par ou ímpar!" << std::endl;
+    std::cout << "Você está pronto para salvar o mundo?\n\n";
 
-    // Pedimos ao jogador que insira um número
+    // Inicializar o gerador de números aleatórios
+    srand(time(0));
+
+    
+    // Laço para garantir que a entrada seja válida ("par" ou "ímpar")
+    do {
+        std::cout << nomeJogador << ", escolha 'par' ou 'ímpar': ";
+        std::cin >> escolhaJogador;
+
+        if (escolhaJogador != "par" && escolhaJogador != "ímpar") {
+            std::cout << "Entrada inválida! Tente novamente." << std::endl;
+        }
+
+    } while (escolhaJogador != "par" && escolhaJogador != "ímpar");
+
+    // Entrada do número do jogador
     std::cout << "Digite um número entre 0 e 9: ";
-    std::cin >> jogadorNumero; // Capturamos o número escolhido pelo jogador
+    std::cin >> jogadorNumero;
 
-    // Geramos um número aleatório entre 0 e 9 para o computador
-    computadorNumero = rand() % 10; // rand() % 10 gera números entre 0 e 9
-    std::cout << "O computador escolheu o número: " << computadorNumero << std::endl;
-
-    // Calculamos a soma dos números do jogador e do computador
-    soma = jogadorNumero + computadorNumero;
-
-    // Exibimos o resultado da soma
-    std::cout << "A soma dos números é: " << soma << std::endl;
-
-    // Verificamos se a soma é par ou ímpar e comparamos com a escolha do jogador
-    if ((soma % 2 == 0 && escolhaJogador == "par") || (soma % 2 != 0 && escolhaJogador == "ímpar")) {
-        // Se a condição for verdadeira, o jogador venceu
-        std::cout << "Parabéns, você venceu!" << std::endl;
-    } else {
-        // Se a condição for falsa, o computador venceu
-        std::cout << "O computador venceu!" << std::endl;
+    // Verificar se o número do jogador está dentro do intervalo permitido
+    while (jogadorNumero < 0 || jogadorNumero > 9) {
+        std::cout << "Número inválido! Digite um número entre 0 e 9: ";
+        std::cin >> jogadorNumero;
     }
 
-    return 0; // Finalizamos o programa com sucesso
+    // Gerar número aleatório para a IA
+    computadorNumero = rand() % 10; // Número entre 0 e 9
+    std::cout << "A IA escolheu o número: " << computadorNumero << std::endl;
+
+    // Calcular a soma dos números
+    soma = jogadorNumero + computadorNumero;
+    std::cout << "A soma dos números é: " << soma << std::endl;
+
+    // Verificar se a soma é par ou ímpar e comparar com a escolha do jogador
+    if ((soma % 2 == 0 && escolhaJogador == "par") || (soma % 2 != 0 && escolhaJogador == "ímpar")) {
+        std::cout << "Parabéns, " << nomeJogador << "! Você venceu e salvou o mundo!" << std::endl;
+    } else {
+        std::cout << "A IA venceu! O mundo está sob seu controle..." << std::endl;
+    }
+
+    return 0;
 }
 
 
